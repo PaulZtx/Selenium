@@ -23,13 +23,13 @@ namespace WpfApp2
     {
         private Selenya selenium;
         private bool isWork = false;
-
+       
         public static MainWindow window;
         public MainWindow()
         {
             
             InitializeComponent();
-            
+           
         }
 
         public static MainWindow Instance()
@@ -52,9 +52,10 @@ namespace WpfApp2
        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+         
             if (!isWork)
             {
-                selenium = new Selenya(login.Text, password.Text);
+                selenium = new Selenya(login.Text, password.Password);
                 Selenya.IsWork = true;
                 selenium.endwork += ChangeState;
                 selenium.changer += ModifyLabel;
@@ -81,5 +82,7 @@ namespace WpfApp2
         {
             Selenya.IsWork = false;
         }
+
+        
     }
 }

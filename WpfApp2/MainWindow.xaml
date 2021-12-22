@@ -67,17 +67,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox  
-            Name ="password"  
-            HorizontalAlignment="Left" 
+        <PasswordBox 
+            Height="28" 
             Margin="144,51,0,0" 
-            Text="" 
-            TextWrapping="Wrap" 
+            Name ="password"  
             VerticalAlignment="Top" 
-            Width="256" 
-            Height="30"
-            Background="#FCBAD3"
-            BorderThickness="3"/>
+            Background="#FCBAD3"/>
+
+
         <TextBox  Name ="login"  HorizontalAlignment="Left" Margin="144,19,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" Height="27"/>
 
         <Button 

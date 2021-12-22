@@ -11,6 +11,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Threading;
 using System.Windows.Threading;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace WpfApp2
 {
@@ -85,6 +86,13 @@ namespace WpfApp2
                     news3 = new List<VkNewsThree>();
 
 
+                    using(ApplicationContext db = new ApplicationContext())
+                    {
+                        db.Vknews1.Add(new VkNews { Id=""});
+                        //db.Vknews2.Add(new VkNewsTwo { Id=""});
+                        db.Vknews3.Add(new VkNewsThree { Id=""});
+                        db.SaveChanges();
+                    }
                     while (IsWork)
                     {
                         GetNews2(driver, ref news1, ref news2, ref news3);
@@ -332,12 +340,15 @@ namespace WpfApp2
                         {
                             case 1:
                                 wr += GetJsonNews(news1.Last());
+                                CreateNote(1);
                                 break;
                             case 2:
                                 wr += GetJsonNews(news2.Last());
+                                //CreateNote(news2.Last());
                                 break;
                             case 3:
                                 wr += GetJsonNews(news3.Last());
+                                CreateNote(3);
                                 break;
 
                         }
@@ -346,7 +357,7 @@ namespace WpfApp2
                         {
                             sw.Write(wr);
                         }
-                        MainWindow.ShowMessage(wr);
+                        //MainWindow.ShowMessage(wr);
                     }
 
                     else
@@ -362,6 +373,7 @@ namespace WpfApp2
                                     return;
 
                                 wr = GetJsonNews(news1.Last());
+                                CreateNote(1);
                                 break;
                             case 2:
 
@@ -369,12 +381,14 @@ namespace WpfApp2
                                     return;
 
                                 wr = GetJsonNews(news2.Last());
+                               // CreateNote(news2.Last());
                                 break;
                             case 3:
                                 if (file.IndexOf(news3.Last().Id) != -1)
                                     return;
 
                                 wr = GetJsonNews(news3.Last());
+                                CreateNote(3);
                                 break;
 
                         }
@@ -396,6 +410,32 @@ namespace WpfApp2
                 catch (Exception exception)
                 {
                     MainWindow.ShowMessage("Ошибка: " + exception.ToString());
+                }
+            }
+        }
+
+        //static object locker
+        void CreateNote(int type)
+        {
+            lock (locker1)
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    switch (type)
+                    {
+                        case 1:
+                            db.Vknews1.Add(news1.Last());
+                            break;
+                        case 2:
+                           // db.Vknews1.Add(news2.Last());
+                            break;
+                        case 3:
+                            db.Vknews3.Add(news3.Last());
+                            break;
+                    }
+                    
+
+                    db.SaveChanges();
                 }
             }
         }
