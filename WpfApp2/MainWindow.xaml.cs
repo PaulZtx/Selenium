@@ -21,26 +21,65 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        Selenya selenium;
+        private Selenya selenium;
+        private bool isWork = false;
+
+        public static MainWindow window;
         public MainWindow()
         {
-           
+            
             InitializeComponent();
+            
         }
 
+        public static MainWindow Instance()
+        {
+            if (window == null)
+                window = new MainWindow();
+            return window;
+        }
+
+        private void ChangeState()
+        {
+            isWork = false;
+            ShowMessage("Работа завершена");
+
+            //Dispatcher.Invoke(() => Input.Background = brush);
+            
+        }
+
+        
        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            selenium = new Selenya(log.Text, pas.Text);
-            Thread enter = new Thread(selenium.Start);
-            enter.Start();
-            
+            if (!isWork)
+            {
+                selenium = new Selenya(login.Text, password.Text);
+                Selenya.IsWork = true;
+                selenium.endwork += ChangeState;
+                selenium.changer += ModifyLabel;
+                Thread start = new Thread(selenium.Start);
+                isWork = true;
+                start.Start();
+            }
+            else
+                ShowMessage("Программа запущена");
+
         }
 
         public static void ShowMessage(string message)
         {
             MessageBox.Show(message);
+        }
+
+        public void ModifyLabel(string tem)
+        {
+            Dispatcher.Invoke(() => Label0.Content += tem + "\n");
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            Selenya.IsWork = false;
         }
     }
 }

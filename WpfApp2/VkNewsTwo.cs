@@ -12,9 +12,8 @@ namespace WpfApp2
     {
         [DataMember]
         public string Id { get; set; }
-
         [DataMember]
-        public string ImagePath { get; set; }
+        public string[] ImagePath { get; set; }
 
     }
 }

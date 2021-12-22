@@ -18,7 +18,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="7" >
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="#222831">
                             <ContentPresenter HorizontalAlignment ="Center" VerticalAlignment="Center">
 
                             </ContentPresenter>
@@ -27,7 +27,37 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard Storyboard.TargetProperty="Background.Color">
+                            <ColorAnimation From="#90EE90" To="#2F4F4F" AutoReverse="True" Duration="0:0:0.25">
+
+                            </ColorAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+            </Style.Triggers>
         </Style>
+
+        <Style TargetType="TextBox" x:Key="TextBoxTemplate">
+            <Setter Property="Background" Value="#FCBAD3"/>
+            <Setter Property="Foreground" Value="#222831"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="#222831" BorderThickness="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            </ContentPresenter>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -37,33 +67,40 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox HorizontalAlignment="Left" 
-                 Margin="52,64,0,0" 
-                 Text="" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="220" 
-                 Name="log" 
-                 Height="18"/>
-
-        <TextBox HorizontalAlignment="Left" 
-                 Margin="35,111,0,0" 
-                 Text="" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="255" 
-                 Name="pas" 
-                 Height="18"/>
+        <TextBox  
+            Name ="password"  
+            HorizontalAlignment="Left" 
+            Margin="144,51,0,0" 
+            Text="" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            Width="256" 
+            Height="30"
+            Background="#FCBAD3"
+            BorderThickness="3"/>
+        <TextBox  Name ="login"  HorizontalAlignment="Left" Margin="144,19,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" Height="27"/>
 
         <Button 
                 Style="{StaticResource RoundButtonTemplate}"
-                Content="Войти" 
+                Content="Запустить" 
                 HorizontalAlignment="Left"
-                Margin="200,134,0,0" 
+                Margin="295,100,0,0" 
                 VerticalAlignment="Top" 
-                Height="40" 
-                Width="95" 
+                Height="35" 
+                Width="80" 
                 Click="Button_Click" 
                 Name="Input"/>
+
+        <Button 
+                Style="{StaticResource RoundButtonTemplate}"
+                Content="Остановить" 
+                HorizontalAlignment="Left"
+                Margin="295,149,0,0" 
+                VerticalAlignment="Top" 
+                Height="35" 
+                Width="80" 
+                Click="Stop_Click"
+                Name="Stop"/>
 
 
 
@@ -74,6 +111,20 @@
                      Grid.Column="1" 
                      Grid.Row="1" 
                      Name="PgBar"/>
+
+        <Label Content="Логин:" Margin="30,15,261,348" FontFamily="Resources/Font.ttf #Quicksand" Foreground="#222831" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+
+        </Label>
+        <Label Content="Пароль:" Margin="30,51,261,315" FontFamily="Resources/Font.ttf #Quicksand" Foreground="#222831"/>
+        <Label Name="Label0" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="40,15,0,0" VerticalAlignment="Top" Width="290" Height="374"/>
 
         <Grid.RowDefinitions>
 

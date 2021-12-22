@@ -9,7 +9,8 @@ namespace WpfApp2
     [Serializable]
     class VkNewsThree
     {
-        public string Id;
-        public string[] Links;
+        public string Id { get; set; }
+        //public string Id;
+        public string Links;
     }
 }
